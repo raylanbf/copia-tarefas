@@ -1,0 +1,10 @@
+{
+  "name": "copia-tarefas-tests",
+  "private": true,
+  "scripts": {
+    "test": "node panel.test.js"
+  },
+  "devDependencies": {
+    "playwright-core": "1.47.2"
+  }
+}

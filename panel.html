@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Copiar Tarefas</title>
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+
+<div class="wrap">
+  <div class="header">
+    <span class="title">📋 Copiar Tarefas</span>
+    <span id="version-label" class="muted small"></span>
+  </div>
+  <p class="small muted intro">Lê a tarefa no curso de origem, sem alterar nada nele, e cria uma cópia em até 10 cursos. Nos destinos só cria: a tarefa e, se pedido, o módulo dela.</p>
+
+  <!-- ── 1. Origem ──────────────────────────────────────────────── -->
+  <section class="card">
+    <div class="row-between">
+      <span class="card-title">1. Curso de origem</span>
+      <button id="btn-src-tab" class="btn-link-sm">usar aba atual</button>
+    </div>
+    <input id="src-input" type="text" inputmode="numeric" placeholder="ID do curso (o número da URL)">
+    <button id="btn-src-list" class="btn btn-surface btn-full mt6">🔍  Listar tarefas</button>
+    <div id="src-status" class="status" hidden></div>
+
+    <div id="src-section" hidden>
+      <div id="src-course" class="course-name mt6"></div>
+      <input id="task-filter" type="text" class="mt4" placeholder="filtrar por nome...">
+      <div id="task-list" class="task-list mt4"></div>
+      <div id="task-detail" class="task-detail mt6" hidden></div>
+    </div>
+  </section>
+
+  <!-- ── 2. Destinos ────────────────────────────────────────────── -->
+  <section class="card">
+    <div class="row-between">
+      <span class="card-title">2. Cursos de destino</span>
+      <button id="btn-dst-tab" class="btn-link-sm">+ aba atual</button>
+    </div>
+    <textarea id="dst-input" class="ta-code" placeholder="67890&#10;11111"></textarea>
+    <span class="small muted hint">Até 10 cursos, um por linha.</span>
+  </section>
+
+  <!-- ── 3. Opções ──────────────────────────────────────────────── -->
+  <section class="card">
+    <span class="card-title">3. Opções</span>
+
+    <div class="opt">
+      <div class="row-between">
+        <label class="opt-label" for="opt-module">Importar também o módulo</label>
+        <label class="toggle"><input type="checkbox" id="opt-module"><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
+      </div>
+      <span class="small muted hint">A tarefa entra num módulo com o mesmo nome do da origem, para o aluno ver módulo e tarefa.</span>
+      <div id="opt-module-extra" class="mt6">
+        <label class="opt-sublabel" for="opt-module-existing">Se o curso já tiver um módulo com esse nome</label>
+        <select id="opt-module-existing">
+          <option value="reuse">Colocar a tarefa no fim dele</option>
+          <option value="new">Criar outro módulo</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="opt">
+      <div class="row-between">
+        <label class="opt-label" for="opt-publish">Enviar publicada</label>
+        <label class="toggle"><input type="checkbox" id="opt-publish"><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
+      </div>
+      <span class="small muted hint">Publicada, os alunos já veem a tarefa (e o módulo novo, se for criado).</span>
+    </div>
+
+    <div class="opt">
+      <div class="row-between">
+        <label class="opt-label" for="opt-sis">Sincronizar com SIS</label>
+        <label class="toggle"><input type="checkbox" id="opt-sis"><span class="toggle-track"><span class="toggle-thumb"></span></span></label>
+      </div>
+      <span class="small muted hint">Liga o "Sincronizar com SIS" da tarefa criada.</span>
+    </div>
+
+    <div class="opt">
+      <label class="opt-sublabel" for="opt-dates">Datas (entrega, disponível de / até)</label>
+      <select id="opt-dates">
+        <option value="keep">Manter as datas da origem</option>
+        <option value="none">Criar sem datas</option>
+      </select>
+    </div>
+  </section>
+
+  <button id="btn-check" class="btn btn-surface btn-full">🔎  Conferir destinos</button>
+  <div id="check-status" class="status" hidden></div>
+  <div id="dst-results" class="results mt6"></div>
+  <button id="btn-run" class="btn btn-green btn-full mt6" hidden></button>
+  <div id="run-summary" class="run-summary mt6" hidden></div>
+</div>
+
+<!-- ── Confirmação ─────────────────────────────────────────────────── -->
+<div id="modal-confirm" class="modal-overlay" hidden>
+  <div class="modal-box">
+    <p class="modal-title">Criar a tarefa?</p>
+    <div id="confirm-detail" class="confirm-detail"></div>
+    <p class="modal-sub">O curso de origem não é alterado. Nos destinos, nada do que já existe é alterado.</p>
+    <div class="modal-btns">
+      <button id="btn-confirm-cancel" class="btn btn-surface">Cancelar</button>
+      <button id="btn-confirm-ok" class="btn btn-green">Criar</button>
+    </div>
+  </div>
+</div>
+
+<script src="panel.js"></script>
+</body>
+</html>
